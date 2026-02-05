@@ -2,9 +2,11 @@ import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { InitialState } from "../types/InitialState";
 import { User } from "../types/user";
 import { useDispatch, useSelector } from "react-redux";
+import { MonitoringPointType } from "../types/monitoringPoint";
 
 const initialState: InitialState = {
-    user: { id: "", email: "", password: "" }
+    user: { id: "", email: "", password: "" },
+    monitoring: []
 };
 
 const userSlice = createSlice({
@@ -12,12 +14,22 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         addUser: (state, { payload }: PayloadAction<User>) => {
-                state.user.id,
+            state.user.id,
                 state.user.email,
                 state.user.password
         },
         resetUser: (state, { payload }: PayloadAction<string>) => {
             state.user = { id: "", email: "", password: "" };
+        }
+    }
+});
+
+const monitoringSlice = createSlice({
+    name: "monitoring",
+    initialState,
+    reducers: {
+        addMonitoringPoints: (state, { payload }: PayloadAction<MonitoringPointType>) => {
+            state.monitoring.push(payload);
         }
     }
 });

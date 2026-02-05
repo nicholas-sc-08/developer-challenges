@@ -3,16 +3,12 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MonitoringPoint } from "../api/monitoringPoint";
+import { MonitoringPointType } from "../types/monitoringPoint";
 
 export function TablePoints() {
     const [page, setPage] = useState(0);
-    const [data, setData] = useState([]);
     const rowsPerPage = 5;
-    const monitoringPoint = new MonitoringPoint();
 
-    useEffect(() => {
-        monitoringPoint.getAllMonitoringPoints(page).then(m => setData(m));
-    }, [page]);
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -25,12 +21,12 @@ export function TablePoints() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row: any) => (
+                    {data.map((row: MonitoringPointType) => (
                         <TableRow key={row.id}>
                             <TableCell>{row.machine.name}</TableCell>
                             <TableCell>{row.machine.type}</TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.sensor.model}</TableCell>
+                            <TableCell>{row.sensor ? row.sensor.model : "none"}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
