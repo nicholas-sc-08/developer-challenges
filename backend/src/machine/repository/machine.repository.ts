@@ -6,6 +6,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export abstract class MachineRepo {
     abstract findManyByUser(userId: string): Promise<Machine[]>;
+    abstract findManyMachines(): Promise<Machine[]>;
     abstract findUniqueMachine(id: string): Promise<Machine | null>;
     abstract findMachineByName(name: string): Promise<Machine | null>;
     abstract createMachine(data: CreateMachineDTO, userId: string): Promise<Machine>;

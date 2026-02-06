@@ -9,9 +9,14 @@ import { JWTGuard } from 'src/auth/jwt.guard';
 export class MachineController {
   constructor(private readonly machineService: MachineService) { }
 
+  @Get(":userId")
+  async findManyByUser(@Query("userId") userId: string) {
+    return await this.machineService.findManyByUser(userId);
+  }
+
   @Get()
-  async findAllMachines(@Query("userId") userId: string) {
-    return await this.machineService.findAllMachines(userId);
+  async findManyMachines() {
+    return await this.machineService.findManyMachines();
   }
 
   @Get(":id")

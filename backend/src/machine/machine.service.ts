@@ -7,8 +7,12 @@ import { UpdateMachineDTO } from './dto/updateMachine.dto';
 export class MachineService {
     constructor(@Inject("MachineRepo") private readonly machineRepo: MachineRepo) { }
 
-    async findAllMachines(userId: string) {
+    async findManyByUser(userId: string) {
         return await this.machineRepo.findManyByUser(userId);
+    }
+
+    async findManyMachines() {
+        return await this.machineRepo.findManyMachines();
     }
 
     async findUniqueMachine(id: string) {

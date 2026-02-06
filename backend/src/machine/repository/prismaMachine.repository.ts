@@ -14,6 +14,10 @@ export class PrismaMachineRepo extends MachineRepo {
         return await this.prisma.machine.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });
     }
 
+    async findManyMachines() {
+        return await this.prisma.machine.findMany({ orderBy: { createdAt: "desc" } });
+    }
+
     async findUniqueMachine(id: string) {
         return await this.prisma.machine.findUnique({ where: { id } });
     }
