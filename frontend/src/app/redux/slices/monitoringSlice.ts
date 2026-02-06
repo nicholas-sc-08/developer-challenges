@@ -1,30 +1,5 @@
+import { InitialMonitoringState, MonitoringPointType } from "@/app/types/monitoring";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export enum MachineType {
-    Pump,
-    Fan
-}
-
-export enum SensorModel {
-    HF_PLUS = "HF_PLUS",
-    TcAg = "TcAg",
-    TcAs = "TcAs"
-}
-
-export type MonitoringPointType = {
-    id: string,
-    name: string,
-    machineId: string,
-    createdAt: Date,
-    machine: { name: string, type: MachineType },
-    sensor?: { model: SensorModel, sensorUid: string }
-}
-
-export type InitialMonitoringState = {
-    items: MonitoringPointType[],
-    total: number,
-    isLoading: boolean,
-};
 
 const initialState: InitialMonitoringState = {
     items: [],

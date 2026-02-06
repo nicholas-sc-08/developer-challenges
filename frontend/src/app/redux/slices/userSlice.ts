@@ -1,4 +1,3 @@
-import { MonitoringPointType } from "./monitoringSlice";
 import { User } from "../../types/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

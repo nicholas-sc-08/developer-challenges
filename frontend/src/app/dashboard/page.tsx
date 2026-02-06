@@ -5,7 +5,7 @@ import { TablePoints } from "../component/TablePoints";
 
 export default function page() {
     return (
-        <Container>
+        <Container sx={{ display: "flex", alignItems: "center", minHeight: "100vh" }}>
             <TablePoints />
         </Container>
     );
