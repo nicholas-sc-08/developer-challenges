@@ -13,9 +13,12 @@ const machineSlice = createSlice({
         setMachines: (state, { payload }: PayloadAction<{ items: MachineState[], isLoading: boolean }>) => {
             state.items = payload.items;
             state.isLoading = payload.isLoading;
+        },
+        setLoading: (state, { payload }: PayloadAction<boolean>) => {
+            state.isLoading = payload;
         }
     }
 });
 
-export const { setMachines } = machineSlice.actions;
+export const { setMachines, setLoading } = machineSlice.actions;
 export default machineSlice.reducer;

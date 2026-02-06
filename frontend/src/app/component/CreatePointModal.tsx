@@ -5,7 +5,7 @@ import { CreateModalProps } from "../types/modal";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { MachineService } from "../api/machine";
-import { setMachines } from "../redux/slices/machineSlice";
+import { setLoading, setMachines } from "../redux/slices/machineSlice";
 import { MachineState } from "../types/machine";
 
 export default function CreatePointModal({ open, onClose, onSucess }: CreateModalProps) {
@@ -14,25 +14,34 @@ export default function CreatePointModal({ open, onClose, onSucess }: CreateModa
     const dispatch = useAppDispatch();
     useEffect(() => {
         async function fetchData() {
+            dispatch(setLoading(true))
             const machineService = new MachineService();
             const response = await machineService.getManyMachines();
+
             dispatch(setMachines({
-                items: response.items,
-                isLoading: response.isLoading
+                items: response,
+                isLoading: false
             }));
         }
         fetchData();
     }, [dispatch]);
+
+    useEffect(() => {
+        console.log(items);
+        
+    }, [items, dispatch])
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
             <DialogTitle sx={{ fontWeight: "bold" }}>New Monitoring Point</DialogTitle>
             <DialogContent dividers>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                <TextField select label="Machine">
-                {items && items.map((item: MachineState) => (
-                    <MenuItem>{item.name}</MenuItem>
-                ))}
-                </TextField>
+                    <TextField value={form.machine} onChange={e => setForm({ ...form, machine: e.target.value })} select label="Machine">
+                        {isLoading && <MenuItem disabled>Loading Machines...</MenuItem>}
+                        {isLoading == false && items && items.length > 0 ? items.map((item: MachineState) => (
+                            <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+                        )): <MenuItem disabled>No Machines Found...</MenuItem>}
+                    </TextField>
                 </Box>
             </DialogContent>
             <DialogActions sx={{ display: "flex", p: 3 }}>
