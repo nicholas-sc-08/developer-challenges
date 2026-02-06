@@ -29,7 +29,7 @@ export class MachineController {
     return await this.machineService.createMachine(machine);
   }
 
-  @Put(":id")
+  @Put(":id")   
   async updateMachine(@Param("id") id: string, @Body() data: UpdateMachineDTO, @Request() req) {
     const userId = req.user.id;
     return await this.machineService.updateMachine(id, data, userId);
