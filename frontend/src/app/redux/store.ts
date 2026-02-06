@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
-import monitoringReducer from "./slices/monitoringSlice";
 import { useDispatch, useSelector } from "react-redux";
+import userReducer from "@/app/redux/slices/userSlice";
+import monitoringReducer from "@/app/redux/slices/monitoringSlice";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        monitoringPoint: monitoringReducer
+        monitoringPoint: monitoringReducer,
     }
 });
 
