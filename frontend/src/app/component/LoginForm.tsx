@@ -5,7 +5,8 @@ import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material"
 import Image from "next/image";
 import { LoginService } from "@/app/api/login";
 import { useRouter } from "next/navigation";
-import { addUser, useAppDispatch } from "@/app/redux/store";
+import { useAppDispatch } from "@/app/redux/store";
+import { setUser } from "../redux/slices/userSlice";
 
 export function LoginForm() {
     
@@ -24,7 +25,7 @@ export function LoginForm() {
                 {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 <TextField value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} label="E-mail" variant="outlined" />
                 <TextField value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} label="Password" variant="outlined" type="password" />
-                <Button onClick={() => loginService.login(form).then(data => { dispatch(addUser(data)), router.push("/dashboard") }).catch(error => setErrorMessage(error.message))} sx={{ backgroundColor: "#70163c", color: "#ffffff", py: 1.5 }}>Submit</Button>
+                <Button onClick={() => loginService.login(form).then(data => { dispatch(setUser(data)), router.push("/dashboard") }).catch(error => setErrorMessage(error.message))} sx={{ backgroundColor: "#70163c", color: "#ffffff", py: 1.5 }}>Submit</Button>
             </Paper>
         </Box>
     );

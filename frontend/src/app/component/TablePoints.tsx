@@ -2,12 +2,30 @@
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
+import { MonitoringPointType, setLoading, setMonitoringPoints } from "../redux/slices/monitoringSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { MonitoringPoint } from "../api/monitoringPoint";
-import { MonitoringPointType } from "../types/monitoringPoint";
+import { translateSensorModelName } from "../api/translate";
 
 export function TablePoints() {
+    const dispatch = useAppDispatch();
+    const { items, total, isLoading } = useAppSelector(state => state.monitoringPoint);
     const [page, setPage] = useState(0);
     const rowsPerPage = 5;
+
+    useEffect(() => {
+        async function fetchData() {
+            dispatch(setLoading(true));
+            const api = new MonitoringPoint();
+            const response = await api.getAllMonitoringPoints(page);
+
+            dispatch(setMonitoringPoints({
+                items: response.items,
+                total: response.total
+            }));
+        }
+        fetchData().then(() => console.log(items));
+    }, [dispatch]);
 
     return (
         <TableContainer component={Paper}>
@@ -21,17 +39,17 @@ export function TablePoints() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row: MonitoringPointType) => (
+                    {items.map((row: MonitoringPointType) => (
                         <TableRow key={row.id}>
                             <TableCell>{row.machine.name}</TableCell>
                             <TableCell>{row.machine.type}</TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.sensor ? row.sensor.model : "none"}</TableCell>
+                            <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "none"}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-            <TablePagination rowsPerPageOptions={[5]} component={"div"} count={data.length} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
+            <TablePagination rowsPerPageOptions={[5]} component={"div"} count={total} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
         </TableContainer>
     );
 }

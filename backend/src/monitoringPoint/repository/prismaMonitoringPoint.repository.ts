@@ -12,7 +12,9 @@ export class PrismaMonitoringPoint extends MonitoringPointRepo {
 
     async findAllPaginatedPoints(page: number) {
         const limit = 5;
-        return await this.prisma.monitoringPoint.findMany({ skip: (page - 1) * limit, include: { machine: { select: { name: true, type: true } }, sensor: { select: { model: true, sensorUid: true } } }, orderBy: { name: "asc" } });
+        const items = await this.prisma.monitoringPoint.findMany({ skip: (page - 1) * limit, take: limit, include: { machine: { select: { name: true, type: true } }, sensor: { select: { model: true, sensorUid: true } } }, orderBy: { name: "asc" } });
+        const total = await this.prisma.monitoringPoint.count();
+        return { items, total };
     }
 
     async findMonitoringPointById(id: string) {
