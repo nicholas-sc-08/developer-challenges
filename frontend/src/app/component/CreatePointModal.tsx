@@ -22,6 +22,9 @@ export default function CreatePointModal({ open, onClose, onSucess }: CreateModa
     const monitoringService = new MonitoringPoint();
 
     useEffect(() => {
+        if(open) {
+            setForm({name: "", machineId: ""});
+        }
         async function fetchData() {
             dispatch(setLoading(true));
             const machines = await machineService.getManyMachines();
