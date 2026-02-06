@@ -56,10 +56,10 @@ model MonitoringPoint {
 model Sensor {
   id  String  @id @default(uuid())
   sensorUid String  @unique
-  model ModelName
+  model SensorModel
 
-  monitoringPointId String  @unique
-  monitoringPoint MonitoringPoint @relation(fields: [monitoringPointId], references: [id], onDelete: Cascade)
+  monitoringPointId String?  @unique
+  monitoringPoint MonitoringPoint? @relation(fields: [monitoringPointId], references: [id], onDelete: Cascade)
 
   data  SensorData[]
 
@@ -79,12 +79,12 @@ model SensorData {
 }
 
 enum MachineType {
-  Pump
-  Fan
+  PUMP
+  FAN
 }
 
-enum ModelName {
-  TcAg
-  TcAs
+enum SensorModel {
+  TCAG
+  TCAS
   HF_PLUS
 }

@@ -28,7 +28,7 @@ describe("MachineController", () => {
     });
 
     it("Should create a machine sucessfully", async () => {
-        const dto = { name: "Bomba Principal 01", type: MachineType.Pump, userId: "123" }
+        const dto = { name: "Bomba Principal 01", type: MachineType.PUMP, userId: "123" }
         machineRepo.createMachine.mockResolvedValue({ ...dto, id: "123-123-123" });
 
         const result = await machineService.createMachine(dto, dto.userId);

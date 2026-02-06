@@ -1,13 +1,13 @@
-import { ModelName } from "@prisma/client";
+import { SensorModel } from "@prisma/client";
 import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class UpdateSensorDTO {
     @IsNotEmpty() @IsString() @IsOptional()
     sensorUid?: string;
 
-    @IsNotEmpty() @IsEnum(ModelName) @IsOptional()
-    model: ModelName;
+    @IsNotEmpty() @IsEnum(SensorModel) @IsOptional()
+    model?: SensorModel;
 
     @IsNotEmpty() @IsUUID() @IsOptional()
-    monitoringPointId: string;
+    monitoringPointId?: string;
 }

@@ -1,15 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ModelName } from "@prisma/client";
-import { IsEnum, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { SensorModel } from "@prisma/client";
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateSensorDTO {
+    @ApiProperty({example: "SN_209"})
     @IsNotEmpty() @IsString()
     sensorUid: string;
 
-    @ApiProperty({ enum: ModelName })
-    @IsNotEmpty() @IsEnum(ModelName, { message: 'Model must be TcAg, TcAs or HF_PLUS' })
-    model: ModelName;
+    @ApiProperty({ enum: SensorModel })
+    @IsNotEmpty() @IsEnum(SensorModel)
+    model: SensorModel;
 
-    @IsNotEmpty() @IsUUID() @IsString()
-    monitoringPointId: string;
+    @IsOptional() @IsUUID() @IsString()
+    monitoringPointId?: string;
 }
