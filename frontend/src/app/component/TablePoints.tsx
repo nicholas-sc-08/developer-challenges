@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MonitoringPointType, setLoading, setMonitoringPoints } from "../redux/slices/monitoringSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
@@ -17,7 +17,7 @@ export function TablePoints() {
         async function fetchData() {
             dispatch(setLoading(true));
             const api = new MonitoringPoint();
-            const response = await api.getAllMonitoringPoints(page);
+            const response = await api.getAllMonitoringPoints(page + 1);
 
             dispatch(setMonitoringPoints({
                 items: response.items,
@@ -25,22 +25,31 @@ export function TablePoints() {
             }));
         }
         fetchData().then(() => console.log(items));
-    }, [dispatch]);
+    }, [dispatch, page]);
 
     return (
         <TableContainer component={Paper}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", p: 2, backgroundColor: '#f8f9fa', borderBottom: '1px solid #eee' }}>
+                <Typography variant="h6" component="div" fontWeight="bold" color="primary">
+                    Pontos de Monitoramento
+                </Typography>
+                <Box>
+                    <Button variant="contained" sx={{ mr: 2 }}>Create Machine</Button>
+                    <Button variant="outlined">Delete Machine</Button>
+                </Box>
+            </Box>
             <Table>
-                <TableHead>
+                <TableHead >
                     <TableRow>
-                        <TableCell>Machine Name</TableCell>
-                        <TableCell>Machine Type</TableCell>
-                        <TableCell>Monitoring Point</TableCell>
-                        <TableCell>Sensor Model</TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>Machine Name</TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>Machine Type</TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>Monitoring Point</TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>Sensor Model</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {items.map((row: MonitoringPointType) => (
-                        <TableRow key={row.id}>
+                        <TableRow key={row.id} sx={{ fontWeight: "light" }}>
                             <TableCell>{row.machine.name}</TableCell>
                             <TableCell>{row.machine.type}</TableCell>
                             <TableCell>{row.name}</TableCell>
