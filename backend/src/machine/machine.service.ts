@@ -24,18 +24,18 @@ export class MachineService {
         throw new NotFoundException(`Machine with id ${id} does not exists!`);
     }
 
-    async createMachine(data: CreateMachineDTO, userId: string) {
+    async createMachine(data: CreateMachineDTO) {
         const machineExists = await this.machineRepo.findMachineByName(data.name);
 
         if (machineExists) {
             throw new ConflictException(`Machine with name ${data.name} already exists!`);
         }
 
-        if(userId != "123") {
+        if(data.userId != "123") {
             throw new ConflictException("User id must be valid!");
         }
 
-        return await this.machineRepo.createMachine(data, userId);
+        return await this.machineRepo.createMachine(data);
     }
 
     async updateMachine(id: string, data: UpdateMachineDTO, userId: string) {

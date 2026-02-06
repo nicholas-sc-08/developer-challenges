@@ -9,7 +9,7 @@ export abstract class MachineRepo {
     abstract findManyMachines(): Promise<Machine[]>;
     abstract findUniqueMachine(id: string): Promise<Machine | null>;
     abstract findMachineByName(name: string): Promise<Machine | null>;
-    abstract createMachine(data: CreateMachineDTO, userId: string): Promise<Machine>;
+    abstract createMachine(data: CreateMachineDTO): Promise<Machine>;
     abstract updateMachine(data: UpdateMachineDTO, id: string): Promise<Machine>;
     abstract deleteMachine(id: string): Promise<void>;
 }

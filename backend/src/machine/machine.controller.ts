@@ -25,8 +25,8 @@ export class MachineController {
   }
 
   @Post()
-  async createMachine(@Body() machine: CreateMachineDTO, @Req() req) {
-    return await this.machineService.createMachine(machine, req.userId);
+  async createMachine(@Body() machine: CreateMachineDTO) {
+    return await this.machineService.createMachine(machine);
   }
 
   @Put(":id")
