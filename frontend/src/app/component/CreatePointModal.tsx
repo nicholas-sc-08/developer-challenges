@@ -26,21 +26,20 @@ export default function CreatePointModal({ open, onClose, onSucess }: CreateModa
         fetchData();
     }, [dispatch]);
 
-    useEffect(() => {
-        console.log(items);
-        
-    }, [items, dispatch])
-
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
             <DialogTitle sx={{ fontWeight: "bold" }}>New Monitoring Point</DialogTitle>
             <DialogContent dividers>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                    <TextField value={form.machine} onChange={e => setForm({ ...form, machine: e.target.value })} select label="Machine">
+                    <TextField label="Point Name*" value={form.name} onChange={e => setForm({...form, name: e.target.value})}/>
+                    <TextField value={form.machine} onChange={e => setForm({ ...form, machine: e.target.value })} select label="Machine*">
                         {isLoading && <MenuItem disabled>Loading Machines...</MenuItem>}
                         {isLoading == false && items && items.length > 0 ? items.map((item: MachineState) => (
                             <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
-                        )): <MenuItem disabled>No Machines Found...</MenuItem>}
+                        )) : <MenuItem disabled>No Machines Found...</MenuItem>}
+                    </TextField>
+                    <TextField label="Sensor Model">
+                        
                     </TextField>
                 </Box>
             </DialogContent>

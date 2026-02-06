@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import userReducer from "@/app/redux/slices/userSlice";
 import monitoringReducer from "@/app/redux/slices/monitoringSlice";
 import machineReducer from "@/app/redux/slices/machineSlice";
+import sensorReducer from "@/app/redux/slices/sensorSlice";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         monitoringPoint: monitoringReducer,
-        machine: machineReducer
+        machine: machineReducer,
+        sensor: sensorReducer
     }
 });
 

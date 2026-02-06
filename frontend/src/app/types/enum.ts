@@ -5,6 +5,6 @@ export enum MachineType {
 
 export enum SensorModel {
     HF_PLUS = "HF_PLUS",
-    TcAg = "TcAg",
-    TcAs = "TcAs"
+    TCAG = "TCAG",
+    TCAS = "TCAS"
 }

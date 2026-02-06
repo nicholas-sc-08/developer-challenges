@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { setLoading, setMonitoringPoints } from "../redux/slices/monitoringSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { MonitoringPoint } from "../api/monitoringPoint";
-import { translateSensorModelName } from "../api/translate";
+import { translateSensorModelName, trasnlateMachineType } from "../api/translate";
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -62,9 +62,9 @@ export function TablePoints() {
                     {items.map((row: MonitoringPointType) => (
                         <TableRow key={row.id} sx={{ fontWeight: "light" }}>
                             <TableCell>{row.machine.name}</TableCell>
-                            <TableCell>{row.machine.type}</TableCell>
+                            <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "none"}</TableCell>
+                            <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "None"}</TableCell>
                             <TableCell><EditIcon /><DeleteIcon /></TableCell>
                         </TableRow>
                     ))}
