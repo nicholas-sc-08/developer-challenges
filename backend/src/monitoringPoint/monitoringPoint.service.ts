@@ -8,8 +8,8 @@ import { MachineRepo } from "src/machine/repository/machine.repository";
 export class MonitoringPointService {
     constructor(@Inject("MonitoringPointRepo") private readonly monitoringPointRepo: MonitoringPointRepo, @Inject("MachineRepo") private readonly machineRepo: MachineRepo) { }
 
-    async findAllPaginatedPoints(page: number) {
-        return await this.monitoringPointRepo.findAllPaginatedPoints(page);
+    async findAllPaginatedPoints(page: number, search?: string) {
+        return await this.monitoringPointRepo.findAllPaginatedPoints(page, search);
     }
 
     async findMonitoringPointById(id: string) {

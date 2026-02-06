@@ -3,6 +3,7 @@ import { MonitoringPointService } from "./monitoringPoint.service";
 import { CreateMonitoringPointDTO } from "./dto/createMonitoringPoint.dto";
 import { updateMonitoringPointDTO } from "./dto/updateMonitoringPoint.dto";
 import { JWTGuard } from "src/auth/jwt.guard";
+import { ApiQuery } from "@nestjs/swagger";
 
 @UseGuards(JWTGuard)
 @Controller("monitoring-point")
@@ -10,9 +11,10 @@ export class MonitoringPointController {
     constructor(private readonly monitoringPointService: MonitoringPointService) { }
 
     @Get()
-    async findAllPaginatedPoints(@Query("page") page: string = "1") {
+    @ApiQuery({ name: "search", required: false, type: String })
+    async findAllPaginatedPoints(@Query("page") page: string = "1", @Query("search") search?: string) {
         const pageNumber = Math.max(1, Number(page));
-        return await this.monitoringPointService.findAllPaginatedPoints(pageNumber);
+        return await this.monitoringPointService.findAllPaginatedPoints(pageNumber, search);
     }
 
     @Get(":id")

@@ -10,10 +10,11 @@ export class PrismaMonitoringPoint extends MonitoringPointRepo {
         super();
     }
 
-    async findAllPaginatedPoints(page: number) {
+    async findAllPaginatedPoints(page: number, search?: string) {
         const limit = 5;
-        const items = await this.prisma.monitoringPoint.findMany({ skip: (page - 1) * limit, take: limit, include: { machine: { select: { name: true, type: true } }, sensor: { select: { model: true, sensorUid: true } } }, orderBy: { name: "asc" } });
-        const total = await this.prisma.monitoringPoint.count();
+        const filter = search ? { OR: [{ name: { contains: search, mode: "insensitive" as const } }, { machine: { name: { contains: search, mode: "insensitive" as const } } }] } : {};
+        const items = await this.prisma.monitoringPoint.findMany({ where: filter, skip: (page - 1) * limit, take: limit, include: { machine: { select: { name: true, type: true } }, sensor: { select: { model: true, sensorUid: true } } }, orderBy: { name: "asc" } });
+        const total = await this.prisma.monitoringPoint.count({ where: filter });
         return { items, total };
     }
 
