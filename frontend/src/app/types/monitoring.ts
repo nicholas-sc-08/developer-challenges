@@ -9,6 +9,11 @@ export type MonitoringPointType = {
     sensor?: { model: SensorModel, sensorUid: string }
 }
 
+export type CreateMonitoringPoint = {
+    name: string,
+    machineId: string
+}
+
 export type InitialMonitoringState = {
     items: MonitoringPointType[],
     total: number,

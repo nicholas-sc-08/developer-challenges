@@ -2,23 +2,23 @@ import { InitialSensorState, SensorState } from "@/app/types/sensor";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: InitialSensorState = {
-    items: [],
-    isLoading: false
+    sensorItems: [],
+    sensorIsLoading: false
 }
 
 const sensorSlice = createSlice({
     name: "sensor",
     initialState,
     reducers: {
-        setSensor: (state, { payload }: PayloadAction<{items: SensorState[], isLoading: boolean}>) => {
-            state.items = payload.items;
-            state.isLoading = payload.isLoading;
+        setSensor: (state, { payload }: PayloadAction<{items: SensorState[], sensorIsLoading: boolean}>) => {
+            state.sensorItems = payload.items;
+            state.sensorIsLoading = payload.sensorIsLoading;
         },
-        setLoading: (state, { payload }: PayloadAction<boolean>) => {
-            state.isLoading = payload;
+        setSensorLoading: (state, { payload }: PayloadAction<boolean>) => {
+            state.sensorIsLoading = payload;
         }
     }
 });
 
-export const { setSensor, setLoading } = sensorSlice.actions;
+export const { setSensor, setSensorLoading } = sensorSlice.actions;
 export default sensorSlice.reducer;

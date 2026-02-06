@@ -7,6 +7,6 @@ export type SensorState = {
 }
 
 export type InitialSensorState = {
-    items: SensorState[],
-    isLoading: boolean,
+    sensorItems: SensorState[],
+    sensorIsLoading: boolean,
 }
