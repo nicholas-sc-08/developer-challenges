@@ -4,13 +4,15 @@ import userReducer from "@/app/redux/slices/userSlice";
 import monitoringReducer from "@/app/redux/slices/monitoringSlice";
 import machineReducer from "@/app/redux/slices/machineSlice";
 import sensorReducer from "@/app/redux/slices/sensorSlice";
+import snackReducer from "@/app/redux/slices/snackSlice";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         monitoringPoint: monitoringReducer,
         machine: machineReducer,
-        sensor: sensorReducer
+        sensor: sensorReducer,
+        snack: snackReducer
     }
 });
 

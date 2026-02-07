@@ -8,3 +8,10 @@ export enum SensorModel {
     TCAG = "TCAG",
     TCAS = "TCAS"
 }
+
+export enum snackType {
+    success = "success",
+    error = "error",
+    info = "info",
+    warning = "warning"
+}

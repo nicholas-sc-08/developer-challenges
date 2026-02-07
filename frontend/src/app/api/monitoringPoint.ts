@@ -1,3 +1,5 @@
+import { showToast } from "../redux/slices/snackSlice";
+import { snackType } from "../types/enum";
 import { CreateMonitoringPoint } from "../types/monitoring";
 import { api } from "./api";
 
@@ -15,21 +17,22 @@ export class MonitoringPoint {
         }
     }
 
-    async createMonitoringPoint(data: CreateMonitoringPoint) {
+    async createMonitoringPoint(data: CreateMonitoringPoint, dispatch: any) {
         try {
             const response = await api.post("/monitoring-point", data);
+            dispatch(showToast({ message: "Monitoring Point created successfully", severity: snackType.success}));
             return response.data;
         } catch (error: any) {
-            throw new Error(error.message);
+            dispatch(showToast({ message: error.message, severity: snackType.error}));
         }
     }
 
-    async deleteMonitoringPoint(id: string) {
+    async deleteMonitoringPoint(id: string, dispatch: any) {
         try {
-            const response = await api.delete(`/monitoring-point/${id}`);
-            return response.data;
+            await api.delete(`/monitoring-point/${id}`);
+            dispatch(showToast({ message: "Monitoring Point deleted successfully", severity: snackType.success}));
         } catch (error: any) {
-            throw new Error(error.message);
+            dispatch(showToast({ message: error.message, severity: snackType.error}));
         }
     }
 }

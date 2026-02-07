@@ -12,6 +12,8 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import CreatePointModal from "./CreatePointModal";
 import { MonitoringPointType } from "../types/monitoring";
 import DeletePointModal from "./DeletePointModal";
+import GlobalSnackBar from "./GlobalSnackBar";
+import { showToast } from "../redux/slices/snackSlice";
 
 export function TablePoints() {
     const dispatch = useAppDispatch();
@@ -77,6 +79,7 @@ export function TablePoints() {
             <TablePagination rowsPerPageOptions={[5]} component={"div"} count={total} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
             <CreatePointModal open={open} onClose={() => setOpen(false)} onSucess={() => { setOpen(false), fetchData() }} />
             <DeletePointModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onSucess={() => {setDeleteModalOpen(false), fetchData()}} pointInfo={pointInfo} />
+            <GlobalSnackBar/>
         </TableContainer>
     );
 }
