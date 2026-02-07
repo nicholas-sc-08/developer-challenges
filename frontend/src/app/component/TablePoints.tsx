@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import CreatePointModal from "./CreatePointModal";
 import { MonitoringPointType } from "../types/monitoring";
+import DeletePointModal from "./DeletePointModal";
 
 export function TablePoints() {
     const dispatch = useAppDispatch();
@@ -18,19 +19,22 @@ export function TablePoints() {
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState("");
     const [open, setOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [pointInfo, setPointInfo] = useState({ id: "", name: "" });
     const rowsPerPage = 5;
 
-    useEffect(() => {
-        async function fetchData() {
-            dispatch(setLoading(true));
-            const api = new MonitoringPoint();
-            const response = await api.getAllMonitoringPoints(page + 1, search);
+    async function fetchData() {
+        dispatch(setLoading(true));
+        const api = new MonitoringPoint();
+        const response = await api.getAllMonitoringPoints(page + 1, search);
 
-            dispatch(setMonitoringPoints({
-                items: response.items,
-                total: response.total
-            }));
-        }
+        dispatch(setMonitoringPoints({
+            items: response.items,
+            total: response.total
+        }));
+    }
+
+    useEffect(() => {
         const timeout = setTimeout(() => {
             fetchData();
         }, 500);
@@ -65,13 +69,14 @@ export function TablePoints() {
                             <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "None"}</TableCell>
-                            <TableCell><EditIcon /><DeleteIcon /></TableCell>
+                            <TableCell><EditIcon /><DeleteIcon sx={{ cursor: "pointer" }} onClick={() => { setDeleteModalOpen(true), setPointInfo({ id: row.id, name: row.name }) }} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             <TablePagination rowsPerPageOptions={[5]} component={"div"} count={total} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
-            <CreatePointModal open={open} onClose={() => setOpen(false)} onSucess={() => setOpen(false)}/>
+            <CreatePointModal open={open} onClose={() => setOpen(false)} onSucess={() => { setOpen(false), fetchData() }} />
+            <DeletePointModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onSucess={() => {setDeleteModalOpen(false), fetchData()}} pointInfo={pointInfo} />
         </TableContainer>
     );
 }

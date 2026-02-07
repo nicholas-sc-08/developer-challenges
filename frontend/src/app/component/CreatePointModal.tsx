@@ -49,7 +49,7 @@ export default function CreatePointModal({ open, onClose, onSucess }: CreateModa
             </DialogContent>
             <DialogActions sx={{ display: "flex", p: 3 }}>
                 <Button fullWidth variant="outlined" onClick={() => onClose()}>Cancel</Button>
-                <Button fullWidth variant="contained" disabled={form.name == "" || form.machineId == ""} onClick={() => monitoringService.createMonitoringPoint(form).then(() => {onSucess(), onClose()})}>Create Point</Button>
+                <Button fullWidth variant="contained" disabled={form.name == "" || form.machineId == ""} onClick={() => monitoringService.createMonitoringPoint(form).then(() => onSucess())}>Create Point</Button>
             </DialogActions>
         </Dialog>
     );

@@ -18,6 +18,16 @@ export class MonitoringPoint {
     async createMonitoringPoint(data: CreateMonitoringPoint) {
         try {
             const response = await api.post("/monitoring-point", data);
+            return response.data;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async deleteMonitoringPoint(id: string) {
+        try {
+            const response = await api.delete(`/monitoring-point/${id}`);
+            return response.data;
         } catch (error: any) {
             throw new Error(error.message);
         }
