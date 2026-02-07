@@ -14,6 +14,8 @@ import { MonitoringPointType } from "../types/monitoring";
 import DeletePointModal from "./DeletePointModal";
 import GlobalSnackBar from "./GlobalSnackBar";
 import { showToast } from "../redux/slices/snackSlice";
+import UpdatePointModal from "./UpdatePointModal";
+import { MachineType, SensorModel } from "../types/enum";
 
 export function TablePoints() {
     const dispatch = useAppDispatch();
@@ -21,7 +23,9 @@ export function TablePoints() {
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState("");
     const [open, setOpen] = useState(false);
+    const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [updatePointInfo, setUpdatePointInfo] = useState({ id: "", name: "", machineId: "", createdAt: null, machine: { name: "", type: MachineType.Fan }, sensor: { model: SensorModel.TCAG, sensorUid: "" } });
     const [pointInfo, setPointInfo] = useState({ id: "", name: "" });
     const rowsPerPage = 5;
 
@@ -71,15 +75,16 @@ export function TablePoints() {
                             <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "None"}</TableCell>
-                            <TableCell><EditIcon /><DeleteIcon sx={{ cursor: "pointer" }} onClick={() => { setDeleteModalOpen(true), setPointInfo({ id: row.id, name: row.name }) }} /></TableCell>
+                            <TableCell><EditIcon sx={{ cursor: "pointer" }} onClick={() => setUpdateModalOpen(true)} /><DeleteIcon sx={{ cursor: "pointer" }} onClick={() => { setDeleteModalOpen(true), setPointInfo({ id: row.id, name: row.name }) }} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             <TablePagination rowsPerPageOptions={[5]} component={"div"} count={total} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
             <CreatePointModal open={open} onClose={() => setOpen(false)} onSucess={() => { setOpen(false), fetchData() }} />
-            <DeletePointModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onSucess={() => {setDeleteModalOpen(false), fetchData()}} pointInfo={pointInfo} />
-            <GlobalSnackBar/>
+            <UpdatePointModal open={updateModalOpen} onClose={() => setUpdateModalOpen(false)} onSucess={() => { setUpdateModalOpen(false), fetchData() }} data={updatePointInfo}/>
+            <DeletePointModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onSucess={() => { setDeleteModalOpen(false), fetchData() }} pointInfo={pointInfo} />
+            <GlobalSnackBar />
         </TableContainer>
     );
 }
