@@ -35,8 +35,8 @@ export class MachineController {
     return await this.machineService.updateMachine(id, data, userId);
   }
 
-  @Delete(":id")
-  async deleteMachine(@Param("id") id: string) {
-    return await this.machineService.deleteMachine(id);
+  @Delete(":name")
+  async deleteMachine(@Param("name") name: string) {
+    return await this.machineService.deleteMachineByName(name);
   }
 }

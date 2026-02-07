@@ -58,13 +58,13 @@ export class MachineService {
         return await this.machineRepo.updateMachine(data, id);
     }
 
-    async deleteMachine(id: string) {
-        const machineExists = await this.machineRepo.findUniqueMachine(id);
-
-        if (machineExists) {
-            await this.machineRepo.deleteMachine(id);
-            return { message: `Machine with id ${id} has been sucessfully deleted!` }
+    async deleteMachineByName(name: string) {
+        const machineExists = await this.machineRepo.findMachineByName(name);
+        
+        if(machineExists) {
+            await this.machineRepo.deleteMachine(machineExists.id);
+            return {message: `Machine with name ${name} has been sucessfully deleted!`}
         }
-        throw new NotFoundException(`Machine with id ${id} does not exists!`);
+        throw new NotFoundException(`Machine with name ${name} does not exists!`);
     }
 }
