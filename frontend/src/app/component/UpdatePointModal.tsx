@@ -5,30 +5,53 @@ import { UpdateModalProps } from "../types/modal";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { MachineService } from "../api/machine";
-import { MonitoringPoint } from "../api/monitoringPoint";
-import { setLoading } from "../redux/slices/monitoringSlice";
 import { setMachines } from "../redux/slices/machineSlice";
+import { SensorService } from "../api/sensor";
+import { setSensor } from "../redux/slices/sensorSlice";
+import { translateSensorModelName } from "../api/translate";
+import { UpdateSensorForm } from "../types/sensor";
+import { MonitoringPointType } from "../types/monitoring";
 import { MachineState } from "../types/machine";
 
 export default function UpdatePointModal({ open, onClose, onSucess, data }: UpdateModalProps) {
-    const [form, setForm] = useState({ name: "", machineId: "" });
+    const [form, setForm] = useState<UpdateSensorForm>({
+        monitoringPointId: data.monitoringPointId,
+        name: data.name,
+        machineId: data.machineId,
+        sensor: data.sensor
+    });
+
     const { items, isLoading } = useAppSelector(state => state.machine);
     const { sensorItems, sensorIsLoading } = useAppSelector(state => state.sensor);
     const dispatch = useAppDispatch();
+
+    const sensorService = new SensorService();
     const machineService = new MachineService();
-    const monitoringService = new MonitoringPoint();
+
+    async function fetchData() {
+        const machines = await machineService.getManyMachines();
+        const sensors = await sensorService.getAllSensors();
+        dispatch(setMachines({ items: machines, isLoading: false }));
+        dispatch(setSensor({ items: sensors, sensorIsLoading: false }));
+
+    }
 
     useEffect(() => {
         if (open) {
-            setForm({ name: "", machineId: "" });
+            setForm({ monitoringPointId: data.monitoringPointId, name: data.name, machineId: data.machineId, sensor: data.sensor });
+            fetchData();
         }
-        async function fetchData() {
-            dispatch(setLoading(true));
-            const machines = await machineService.getManyMachines();
-            dispatch(setMachines({ items: machines, isLoading: false }));
+    }, [open, data]);
+
+    async function handleSensorChange(id: string) {
+        const selected = sensorItems.find(sensor => sensor.id == id);
+        if (selected) {
+            setForm({ ...form, sensor: { id: selected.id, sensorUid: selected.sensorUid, model: selected.model } });
+        } else {
+            setForm({ ...form, sensor: null });
         }
-        fetchData();
-    }, [dispatch, open]);
+    };
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
             <DialogTitle sx={{ fontWeight: "bold" }}>Update Monitoring Point</DialogTitle>
@@ -36,16 +59,26 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                     <TextField label="Point Name*" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                     <TextField value={form.machineId || ""} onChange={e => setForm({ ...form, machineId: e.target.value })} select label="Machine*">
-                        {isLoading && <MenuItem disabled>Loading Machines...</MenuItem>}
-                        {isLoading == false && items && items.length > 0 ? items.map((item: MachineState) => (
+                        {items?.map((item: MachineState) => (
                             <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
-                        )) : <MenuItem disabled>No Machines Found...</MenuItem>}
+                        ))}
+                    </TextField>
+                    <TextField label="Sensor Model" select value={form.sensor?.id || ""} onChange={e => handleSensorChange(e.target.value)}>
+                        <MenuItem value="">Nenhum Sensor</MenuItem>
+                        {sensorIsLoading == false && sensorItems?.map((item, i) => {
+                            if (item.monitoringPointId == null || item.id == data.sensor?.id) {
+                                return (
+                                    <MenuItem key={item.id} value={item.id}>{item.sensorUid} - {translateSensorModelName(item.model)}</MenuItem>
+                                );
+                            }
+                            return null;
+                        })}
                     </TextField>
                 </Box>
             </DialogContent>
-            <DialogActions sx={{ display: "flex", p: 3 }}>
-                <Button fullWidth variant="outlined" onClick={() => onClose()}>Cancel</Button>
-                <Button fullWidth variant="contained" disabled={form.name == "" || form.machineId == ""} onClick={() => monitoringService.createMonitoringPoint(form, dispatch).then(() => onSucess())}>Update Point</Button>
+            <DialogActions sx={{ p: 3 }}>
+                <Button fullWidth variant="outlined" onClick={onClose}>Cancel</Button>
+                <Button fullWidth variant="contained" disabled={!form.name || !form.machineId} onClick={() => sensorService.updateSensor(form, dispatch).then(() => onSucess())}>Update Point</Button>
             </DialogActions>
         </Dialog>
     );

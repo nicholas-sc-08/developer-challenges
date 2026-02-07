@@ -9,7 +9,7 @@ export default function GlobalSnackBar() {
     const { toast } = useAppSelector(state => state.snack);
     return (
         <Snackbar open={toast.open} autoHideDuration={4000} onClose={() => dispatch(hideToast())} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-            <Alert onClose={() => dispatch(hideToast())} severity={toast.severity} variant="outlined">{toast.message}</Alert>
+            <Alert onClose={() => dispatch(hideToast())} severity={toast.severity} variant="filled">{toast.message}</Alert>
         </Snackbar>
     )
 }

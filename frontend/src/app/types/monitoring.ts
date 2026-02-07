@@ -6,7 +6,7 @@ export type MonitoringPointType = {
     machineId: string,
     createdAt: Date | null,
     machine: { name: string, type: MachineType },
-    sensor?: { model: SensorModel, sensorUid: string }
+    sensor?: { id: string, model: SensorModel, sensorUid: string }
 }
 
 export type CreateMonitoringPoint = {

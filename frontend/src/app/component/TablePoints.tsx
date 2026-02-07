@@ -13,9 +13,9 @@ import CreatePointModal from "./CreatePointModal";
 import { MonitoringPointType } from "../types/monitoring";
 import DeletePointModal from "./DeletePointModal";
 import GlobalSnackBar from "./GlobalSnackBar";
-import { showToast } from "../redux/slices/snackSlice";
 import UpdatePointModal from "./UpdatePointModal";
-import { MachineType, SensorModel } from "../types/enum";
+import { SensorModel } from "../types/enum";
+import { UpdateSensorForm } from "../types/sensor";
 
 export function TablePoints() {
     const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export function TablePoints() {
     const [open, setOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [updatePointInfo, setUpdatePointInfo] = useState({ id: "", name: "", machineId: "", createdAt: null, machine: { name: "", type: MachineType.Fan }, sensor: { model: SensorModel.TCAG, sensorUid: "" } });
+    const [updatePointInfo, setUpdatePointInfo] = useState<UpdateSensorForm>({ monitoringPointId: "", name: "", machineId: "", sensor: { id: "", sensorUid: "", model: "None" } });
     const [pointInfo, setPointInfo] = useState({ id: "", name: "" });
     const rowsPerPage = 5;
 
@@ -75,14 +75,14 @@ export function TablePoints() {
                             <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.sensor ? translateSensorModelName(row.sensor.model) : "None"}</TableCell>
-                            <TableCell><EditIcon sx={{ cursor: "pointer" }} onClick={() => setUpdateModalOpen(true)} /><DeleteIcon sx={{ cursor: "pointer" }} onClick={() => { setDeleteModalOpen(true), setPointInfo({ id: row.id, name: row.name }) }} /></TableCell>
+                            <TableCell><EditIcon sx={{ cursor: "pointer" }} onClick={() => { setUpdateModalOpen(true), setUpdatePointInfo({ monitoringPointId: row.id, name: row.name, machineId: row.machineId, sensor: row.sensor || null }) }} /><DeleteIcon sx={{ cursor: "pointer" }} onClick={() => { setDeleteModalOpen(true), setPointInfo({ id: row.id, name: row.name }) }} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             <TablePagination rowsPerPageOptions={[5]} component={"div"} count={total} rowsPerPage={rowsPerPage} page={page} onPageChange={(e, newPage) => setPage(newPage)} />
             <CreatePointModal open={open} onClose={() => setOpen(false)} onSucess={() => { setOpen(false), fetchData() }} />
-            <UpdatePointModal open={updateModalOpen} onClose={() => setUpdateModalOpen(false)} onSucess={() => { setUpdateModalOpen(false), fetchData() }} data={updatePointInfo}/>
+            <UpdatePointModal open={updateModalOpen} onClose={() => setUpdateModalOpen(false)} onSucess={() => { setUpdateModalOpen(false), fetchData() }} data={updatePointInfo} />
             <DeletePointModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onSucess={() => { setDeleteModalOpen(false), fetchData() }} pointInfo={pointInfo} />
             <GlobalSnackBar />
         </TableContainer>

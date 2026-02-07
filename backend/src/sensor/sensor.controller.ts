@@ -24,7 +24,7 @@ export class SensorController {
         return await this.sensorService.createSensor(data);
     }
 
-    @Put()
+    @Put(":id")
     async updateSensor(@Body() data: UpdateSensorDTO, @Param("id") id: string) {
         return await this.sensorService.updateSensor(data, id);
     }

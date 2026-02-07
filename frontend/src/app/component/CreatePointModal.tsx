@@ -7,16 +7,11 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { MachineService } from "../api/machine";
 import { setLoading, setMachines } from "../redux/slices/machineSlice";
 import { MachineState } from "../types/machine";
-import { SensorService } from "../api/sensor";
-import { setSensor, setSensorLoading } from "../redux/slices/sensorSlice";
-import { SensorState } from "../types/sensor";
-import { translateSensorModelName } from "../api/translate";
 import { MonitoringPoint } from "../api/monitoringPoint";
 
 export default function CreatePointModal({ open, onClose, onSucess }: CreateModalProps) {
     const [form, setForm] = useState({ name: "", machineId: "" });
     const { items, isLoading } = useAppSelector(state => state.machine);
-    const { sensorItems, sensorIsLoading } = useAppSelector(state => state.sensor);
     const dispatch = useAppDispatch();
     const machineService = new MachineService();
     const monitoringService = new MonitoringPoint();

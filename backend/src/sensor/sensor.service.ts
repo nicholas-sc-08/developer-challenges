@@ -64,7 +64,7 @@ export class SensorService {
 
         if (data.sensorUid) {
             const sensorWithUid = await this.sensorRepo.findSensorByUid(data.sensorUid);
-            if (sensorWithUid) {
+            if (sensorWithUid && sensorWithUid.id != id) {
                 throw new ConflictException(`Sensor with Uid ${data.sensorUid} already exists!`);
             }
         }

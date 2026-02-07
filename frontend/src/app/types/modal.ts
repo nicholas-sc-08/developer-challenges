@@ -1,5 +1,6 @@
 import { MachineType, SensorModel } from "./enum";
 import { MonitoringPointType } from "./monitoring";
+import { UpdateSensorForm } from "./sensor";
 
 export type CreateModalProps = {
     open: boolean,
@@ -11,7 +12,7 @@ export type UpdateModalProps = {
     open: boolean,
     onClose: () => void,
     onSucess: () => void,
-    data: MonitoringPointType
+    data: UpdateSensorForm
 }
 
 export type DeleteModalProps = {
