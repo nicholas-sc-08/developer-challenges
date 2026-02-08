@@ -69,12 +69,12 @@ export class SensorService {
             }
         }
 
-        if (data.monitoringPointId) {
-            const sensorInPoint = await this.monitoringPoint.findMonitoringPointById(data.monitoringPointId);
-            if (sensorInPoint && sensorInPoint.id != id) {
-                throw new ConflictException(`Sensor with Monitoring Point Id ${data.monitoringPointId} already exists!`);
-            }
-        }
+        // if (data.monitoringPointId) {
+        //     const sensorInPoint = await this.monitoringPoint.findMonitoringPointById(data.monitoringPointId);
+        //     if (sensorInPoint && sensorInPoint.id != id) {
+        //         throw new ConflictException(`Sensor with Monitoring Point Id ${data.monitoringPointId} already exists!`);
+        //     }
+        // }
 
         return await this.sensorRepo.updateSensor(data, id);
     }

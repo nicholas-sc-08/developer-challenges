@@ -18,7 +18,7 @@ export class SensorDataService {
         return await this.sensorDataRepo.countSensorData(sensorId);
     }
 
-    async findManySensorData(sensorId: string, startTime: Date, endTime: Date) {
+    async findManySensorData(sensorId: string, startTime?: Date, endTime?: Date) {
         return await this.sensorDataRepo.findManySensorData(sensorId, startTime, endTime);
     }
 

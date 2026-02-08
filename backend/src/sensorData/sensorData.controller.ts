@@ -24,8 +24,10 @@ export class SensorDataController {
     }
 
     @Get(":sensorId")
-    async findManySensorData(@Param("sensorId") sensorId: string, @Query("start") start: string, @Query("end") end: string) {
-        return await this.sensorDataService.findManySensorData(sensorId, new Date(start), new Date(end));
+    async findManySensorData(@Param("sensorId") sensorId: string, @Query("start") start?: string, @Query("end") end?: string) {
+        const startDate = start ? new Date(start) : undefined;
+        const endDate = end ? new Date(end) : undefined;
+        return await this.sensorDataService.findManySensorData(sensorId, startDate, endDate);
     }
 
     @Post()

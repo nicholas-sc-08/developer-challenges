@@ -22,7 +22,7 @@ export class PrismaSensorDataRepo extends SensorDataRepo {
         return { sensorId, totalPoints: metrics._count, temp: { avarage: metrics._avg.temp ?? 0, min: metrics._min.temp ?? 0, max: metrics._max.temp }, vib: { avarage: metrics._avg.vibration, min: metrics._min.vibration, max: metrics._max.vibration }, take: 100 };
     }
 
-    async findManySensorData(sensorId: string, startTime: Date, endTime: Date) {
+    async findManySensorData(sensorId: string, startTime?: Date, endTime?: Date) {
         return await this.prisma.sensorData.findMany({ where: { sensorId, timestamp: { gte: startTime, lte: endTime } }, orderBy: { timestamp: "asc" } });
     }
 
