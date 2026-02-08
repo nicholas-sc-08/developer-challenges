@@ -1,7 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { SensorDataRepo } from "./repository/sensorData.repository";
-import { Prisma } from "@prisma/client";
-import { CreateSensorDataDTO } from "./dto/updateSensorData.dto";
+import { CreateSensorDataDTO } from "./dto/createSensorData.dto";
 
 @Injectable()
 export class SensorDataService {

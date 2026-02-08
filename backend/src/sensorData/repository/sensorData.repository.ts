@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { SensorData } from "@prisma/client";
-import { CreateSensorDataDTO } from "../dto/updateSensorData.dto";
+import { CreateSensorDataDTO } from "../dto/createSensorData.dto";
 
 @Injectable()
 export abstract class SensorDataRepo {

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/client";
 import { SensorDataRepo } from "./sensorData.repository";
-import { CreateSensorDataDTO } from "../dto/updateSensorData.dto";
+import { CreateSensorDataDTO } from "../dto/createSensorData.dto";
 
 @Injectable()
 export class PrismaSensorDataRepo extends SensorDataRepo {
@@ -19,7 +19,7 @@ export class PrismaSensorDataRepo extends SensorDataRepo {
 
     async getMetrics(sensorId: string) {
         const metrics = await this.prisma.sensorData.aggregate({ where: { sensorId }, _avg: { temp: true, vibration: true }, _min: { temp: true, vibration: true }, _max: { temp: true, vibration: true }, _count: true });
-        return { sensorId, totalPoints: metrics._count, temp: { avarage: metrics._avg.temp ?? 0, min: metrics._min.temp ?? 0, max: metrics._max.temp }, vib: { avarage: metrics._avg.vibration, min: metrics._min.vibration, max: metrics._max.vibration } };
+        return { sensorId, totalPoints: metrics._count, temp: { avarage: metrics._avg.temp ?? 0, min: metrics._min.temp ?? 0, max: metrics._max.temp }, vib: { avarage: metrics._avg.vibration, min: metrics._min.vibration, max: metrics._max.vibration }, take: 100 };
     }
 
     async findManySensorData(sensorId: string, startTime: Date, endTime: Date) {

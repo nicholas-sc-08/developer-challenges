@@ -1,5 +1,4 @@
-import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateSensorDataDTO {
     
@@ -12,6 +11,6 @@ export class CreateSensorDataDTO {
     @IsNotEmpty() @IsUUID() @IsString()
     sensorId: string;
     
-    @IsNotEmpty() @IsDate() @Type(() => Date)
-    timestamp: Date;
+    @IsNotEmpty() @IsDateString()
+    timestamp: string;
 }

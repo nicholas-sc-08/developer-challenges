@@ -1,8 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
-import { SensorService } from "src/sensor/sensor.service";
-import { CreateSensorDataDTO } from "./dto/updateSensorData.dto";
 import { SensorDataService } from "./sensorData.service";
 import { JWTGuard } from "src/auth/jwt.guard";
+import { CreateSensorDataDTO } from "./dto/createSensorData.dto";
 
 @UseGuards(JWTGuard)
 @Controller("sensor-data")
