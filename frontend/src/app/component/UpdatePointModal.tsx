@@ -41,7 +41,7 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
             setForm({ monitoringPointId: data.monitoringPointId, name: data.name, machineId: data.machineId, sensor: data.sensor });
             fetchData();
         }
-    }, [open, data]);
+    }, [open, data, dispatch]);
 
     async function handleSensorChange(id: string) {
         const selected = sensorItems.find(sensor => sensor.id == id);
@@ -64,7 +64,7 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
                         ))}
                     </TextField>
                     <TextField label="Sensor Model" select value={form.sensor?.id || ""} onChange={e => handleSensorChange(e.target.value)}>
-                        <MenuItem value="">Nenhum Sensor</MenuItem>
+                        <MenuItem value=""  >No Sensor</MenuItem>
                         {sensorIsLoading == false && sensorItems?.map((item, i) => {
                             if (item.monitoringPointId == null || item.id == data.sensor?.id) {
                                 return (
@@ -78,7 +78,7 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
             </DialogContent>
             <DialogActions sx={{ p: 3 }}>
                 <Button fullWidth variant="outlined" onClick={onClose}>Cancel</Button>
-                <Button fullWidth variant="contained" disabled={!form.name || !form.machineId} onClick={() => sensorService.updateSensor(form, dispatch).then(() => onSucess())}>Update Point</Button>
+                <Button fullWidth variant="contained" disabled={!form.name || !form.machineId} onClick={() => sensorService.handleUpdateSensor(data.sensor ? data.sensor.id : "", form, dispatch).then(() => { onSucess(), fetchData() })}>Update Point</Button>
             </DialogActions>
         </Dialog>
     );

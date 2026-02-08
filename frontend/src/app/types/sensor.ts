@@ -10,9 +10,9 @@ export type SensorState = {
 
 export type UpdateSensorForm = {
     monitoringPointId: string,
-    name: string,
-    machineId: string,
-    sensor: { id: string, sensorUid: string, model: SensorModel | string } | null
+    name?: string,
+    machineId?: string,
+    sensor?: { id: string, sensorUid?: string, model?: SensorModel | string } | null
 }
 
 export type InitialSensorState = {

@@ -14,6 +14,11 @@ export type CreateMonitoringPoint = {
     machineId: string
 }
 
+export type UpdateMonitoringPoint = {
+    name?: string,
+    machineId?: string
+}
+
 export type InitialMonitoringState = {
     items: MonitoringPointType[],
     total: number,

@@ -71,9 +71,21 @@ export class SensorService {
 
         if (data.monitoringPointId) {
             const sensorInPoint = await this.sensorRepo.findSensorByMonitoringPointId(data.monitoringPointId);
-            if (sensorInPoint) {
+            if (sensorInPoint && sensorInPoint.id != id) {
                 throw new ConflictException(`Sensor with Monitoring Point Id ${data.monitoringPointId} already exists!`);
             }
+
+            const point = await this.monitoringPoint.findMonitoringPointById(data.monitoringPointId);
+            if (!point) {
+                throw new NotFoundException(`Monitoring point with id ${data.monitoringPointId} does not exists!`);
+            }
+
+            const machine = await this.machineRepo.findUniqueMachine(point?.machineId);
+            if (!machine) {
+                throw new NotFoundException(`Machine with id ${point.machineId} does not exists!`);
+            }
+            const sensorModel = data.model || sensorExists.model;
+            this.validatePumpModel(machine.type, sensorModel);
         }
 
         return await this.sensorRepo.updateSensor(data, id);
