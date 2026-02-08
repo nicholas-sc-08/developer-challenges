@@ -12,11 +12,12 @@ import { setSensorDataLoading, setSensorsData } from "../redux/slices/sensorData
 export default function page() {
     const dispatch = useAppDispatch();
     const { items, isLoading } = useAppSelector(state => state.sensorData);
+    const { selectedSensorId } = useAppSelector(state => state.sensor);
     const sensorDataService = new SensorDataService();
     async function fetchData() {
         try {
             dispatch(setSensorDataLoading(true));
-            const sensors = await sensorDataService.getAllSensorDatas();
+            const sensors = await sensorDataService.getManySensorDataById(selectedSensorId);
             dispatch(setSensorsData({ items: sensors, isLoading: false }));
 
         } catch (error: any) {
@@ -26,11 +27,11 @@ export default function page() {
 
     useEffect(() => {
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, selectedSensorId]);
     return (
         <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh" }}>
             <TablePoints />
-            <SensorDataGraph data={items} />
+            <SensorDataGraph data={items}/>
         </Container>
     );
 }

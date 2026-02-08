@@ -1,8 +1,9 @@
 "use client";
 
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { SensorData } from "../types/sensorData";
 
-export default function SensorDataGraph({ data }: { data: any[] }) {
+export default function SensorDataGraph({ data }: { data: SensorData[] }) {
     return (
         <div style={{ width: "100%", height: 350 }}>
             <ResponsiveContainer>

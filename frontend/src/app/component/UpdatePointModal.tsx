@@ -32,7 +32,7 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
         const machines = await machineService.getManyMachines();
         const sensors = await sensorService.getAllSensors();
         dispatch(setMachines({ items: machines, isLoading: false }));
-        dispatch(setSensor({ items: sensors, sensorIsLoading: false }));
+        dispatch(setSensor({ items: sensors, sensorIsLoading: false, selectedSensorId: "" }));
 
     }
 

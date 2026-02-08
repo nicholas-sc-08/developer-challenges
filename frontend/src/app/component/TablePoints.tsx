@@ -16,10 +16,12 @@ import GlobalSnackBar from "./GlobalSnackBar";
 import UpdatePointModal from "./UpdatePointModal";
 import { SensorModel } from "../types/enum";
 import { UpdateSensorForm } from "../types/sensor";
+import { setSelectedSensorId } from "../redux/slices/sensorSlice";
 
 export function TablePoints() {
     const dispatch = useAppDispatch();
     const { items, total } = useAppSelector(state => state.monitoringPoint);
+    const { selectedSensorId } = useAppSelector(state => state.sensor);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState("");
     const [open, setOpen] = useState(false);
@@ -70,7 +72,7 @@ export function TablePoints() {
                 </TableHead>
                 <TableBody>
                     {items.map((row: MonitoringPointType) => (
-                        <TableRow key={row.id} sx={{ fontWeight: "light" }}>
+                        <TableRow key={row.id} sx={{ fontWeight: "light" }} onClick={() => row.sensor ? dispatch(setSelectedSensorId(row.sensor.id)) : ""}>
                             <TableCell>{row.machine.name}</TableCell>
                             <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>

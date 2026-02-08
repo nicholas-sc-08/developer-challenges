@@ -18,4 +18,5 @@ export type UpdateSensorForm = {
 export type InitialSensorState = {
     sensorItems: SensorState[],
     sensorIsLoading: boolean,
+    selectedSensorId: string
 }
