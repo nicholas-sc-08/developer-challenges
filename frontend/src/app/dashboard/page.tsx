@@ -29,7 +29,7 @@ export default function page() {
         fetchData();
     }, [dispatch, selectedSensorId]);
     return (
-        <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh" }}>
+        <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between ", minHeight: "100vh" }}>
             <TablePoints />
             <SensorDataGraph data={items}/>
         </Container>

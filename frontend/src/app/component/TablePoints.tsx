@@ -72,7 +72,7 @@ export function TablePoints() {
                 </TableHead>
                 <TableBody>
                     {items.map((row: MonitoringPointType) => (
-                        <TableRow key={row.id} sx={{ fontWeight: "light" }} onClick={() => row.sensor ? dispatch(setSelectedSensorId(row.sensor.id)) : ""}>
+                        <TableRow key={row.id} sx={{ fontWeight: "light", cursor: row.sensor ? "pointer" : "default", backgroundColor: selectedSensorId == row.sensor?.id ? "#e3f2fd": "inherit", transition: 0.2 }} onClick={() => row.sensor ? dispatch(setSelectedSensorId(row.sensor.id)) : ""}>
                             <TableCell>{row.machine.name}</TableCell>
                             <TableCell>{trasnlateMachineType(row.machine.type)}</TableCell>
                             <TableCell>{row.name}</TableCell>
