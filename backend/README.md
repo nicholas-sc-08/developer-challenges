@@ -1,3 +1,7 @@
+<img src="../frontend/public/dynamoxBanner.png"/>
+
+<br>
+
 # ⚙️ Dynamox Challenge - Backend
 
 This is a aplication server which of industry machines, you can have monitoring points of machines and sensors for those monitoring points.
@@ -64,7 +68,7 @@ Main Features:
 
 | Category | Method | EndPoint | Description | Key Params |
 |-|-|-|-|-|
-| **Auth** | ``GET`` | ``/auth/login`` | System authentication | none |
+| **Auth** | ``POST`` | ``/auth/login`` | System authentication | none |
 | **Auth** | ``GET`` | ``/auth/logout`` | Logout of system | none |
 | **Machine** | ``GET`` | ``/machine`` | List all machines | userId |
 | **Machine** | ``POST`` | ``/machine`` | Insert a machine on system | name, type, userId |

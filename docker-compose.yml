@@ -8,7 +8,12 @@ services:
       - "3001:3001"
     environment:
       - JWT_SECRET=9140987134871907451452345
-      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/dynamox?schema=public
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/dynamox?schema=public
+    depends_on:
+      - db
+    command: >
+      sh -c "npx prisma db seed && 
+             npm run start"
   frontend:
     build:
       context: ./frontend

@@ -10,7 +10,6 @@ import { SensorService } from "../api/sensor";
 import { setSensor } from "../redux/slices/sensorSlice";
 import { translateSensorModelName } from "../api/translate";
 import { UpdateSensorForm } from "../types/sensor";
-import { MonitoringPointType } from "../types/monitoring";
 import { MachineState } from "../types/machine";
 
 export default function UpdatePointModal({ open, onClose, onSucess, data }: UpdateModalProps) {
@@ -64,7 +63,7 @@ export default function UpdatePointModal({ open, onClose, onSucess, data }: Upda
                         ))}
                     </TextField>
                     <TextField label="Sensor Model" select value={form.sensor?.id || ""} onChange={e => handleSensorChange(e.target.value)}>
-                        <MenuItem value=""  >No Sensor</MenuItem>
+                        <MenuItem value="">No Sensor</MenuItem>
                         {sensorIsLoading == false && sensorItems?.map((item, i) => {
                             if (item.monitoringPointId == null || item.id == data.sensor?.id) {
                                 return (

@@ -17,10 +17,10 @@ async function main() {
     const prisma = new PrismaClient({ adapter });
 
     try {
-        await prisma.user.upsert({ where: { id: "123" }, update: {}, create: { id: "123", name: "admin", email: "admin@dynamox.com", password: "123456" } });
+        await prisma.user.upsert({ where: { id: "123    " }, update: {}, create: { id: "123", name: "admin", email: "admin@dynamox.com", password: "123456" } });
         console.log("Seed complete with sucess!");
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Fatal error on seed: ", error);
 
     } finally {
