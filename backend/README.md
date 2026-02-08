@@ -1,4 +1,4 @@
-<img src="../frontend/public/dynamoxBanner.png"/>
+<img src="../frontend/public/dynamoxBanner.png" width="100%"/>
 
 <br>
 
