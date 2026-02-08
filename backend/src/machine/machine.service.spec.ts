@@ -11,6 +11,7 @@ describe("MachineController", () => {
     beforeEach(async () => {
         const mockMachineRepo = {
             findUniqueMachine: jest.fn(),
+            findMachineByName: jest.fn(),
             createMachine: jest.fn(),
             updateMachine: jest.fn(),
             deleteMachine: jest.fn()
