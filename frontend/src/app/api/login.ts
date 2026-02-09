@@ -7,9 +7,18 @@ export class LoginService {
             const res = await api.post("/auth/login", data);
             return res.data;
         } catch (error: any) {
-            if(error.status == 400) {
+            if (error.status == 400) {
                 throw new Error("Credentials are invalid!");
             }
+        }
+    }
+
+    async logout() {
+        try {
+            await api.get("/auth/logout");
+
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 }

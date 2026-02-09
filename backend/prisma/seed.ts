@@ -15,6 +15,12 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+
+    await prisma.sensorData.deleteMany();
+    await prisma.sensor.deleteMany();
+    await prisma.monitoringPoint.deleteMany();
+    await prisma.machine.deleteMany();
+
     const admin = await prisma.user.upsert({
         where: { email: "admin@dynamox.com" },
         update: {},
@@ -40,8 +46,8 @@ async function main() {
                             model: SensorModel.HF_PLUS,
                             data: {
                                 create: Array.from({ length: 10 }).map((_, i) => ({
-                                    temp: Math.random() * 50 + 20,
-                                    vibration: Math.random() * 10,
+                                    temp: Number((Math.random() * 50 + 20).toFixed(2)),
+                                    vibration: Number((Math.random() * 10).toFixed(2)),
                                     timestamp: new Date(Date.now() - i * 3600000)
                                 }))
                             }
@@ -66,8 +72,8 @@ async function main() {
                             model: SensorModel.TCAG,
                             data: {
                                 create: Array.from({ length: 10 }).map((_, i) => ({
-                                    temp: Math.random() * 50 + 20,
-                                    vibration: Math.random() * 10,
+                                    temp: Number((Math.random() * 50 + 20).toFixed(2)),
+                                    vibration: Number((Math.random() * 10).toFixed(2)),
                                     timestamp: new Date(Date.now() - i * 3600000)
                                 }))
                             }

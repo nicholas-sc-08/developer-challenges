@@ -47,7 +47,7 @@ docker compose-up --build
 
 3. Access points:
 - **Frontend:** http://localhost:3000
-- **API Documentation (Swagger): http://localhost:3001/api
+- **API Documentation (Swagger):** http://localhost:3001/api
 
 ## ✨ Solved Ambiguites & Key Decisions (Requiriment 4)
 As solicitated, I documentated here the assumed premisses:

@@ -8,6 +8,7 @@ import { SensorDataService } from "../api/sensorData";
 import { useEffect } from "react";
 import { SensorData } from "../types/sensorData";
 import { setSensorDataLoading, setSensorsData } from "../redux/slices/sensorDataSlice";
+import Header from "../component/Header";
 
 export default function page() {
     const dispatch = useAppDispatch();
@@ -29,9 +30,10 @@ export default function page() {
         fetchData();
     }, [dispatch, selectedSensorId]);
     return (
-        <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between ", minHeight: "100vh" }}>
+        <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, py: 4, minHeight: "100vh" }}>
+            <Header />
             <TablePoints />
-            <SensorDataGraph data={items}/>
+            <SensorDataGraph data={items} />
         </Container>
     );
 }
