@@ -61,6 +61,15 @@ The frontend architecture:
 
 - ``src/app/utils``: Unit tests of frontend.
 
+## ⚙️ Configuration and Environment Variables
+To facilitate evaluation, the project comes pre-configured for the local development environment via **Docker**.
+
+**Default Execution:** The necessary ``environment`` variables (such as ``DATABASE_URL`` and ``JWT_SECRET``) already have default values ​​defined in the ``docker-compose.yml`` file.
+
+**Customization:** If you wish to change the ports or security keys, you can directly edit the variables in the ``environment`` section of the services in ``docker-compose.yml``.
+
+**Persistence:** The PostgreSQL database uses a Docker volume to ensure that sensor and machine data is not lost between container restarts.
+
 ## 📺 Instalation & Setup
 ```markdown
 1. Clone the Repository.
